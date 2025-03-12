@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect } from "react";
 import avtar from "../../assets/avtar.jpg";
 import linkedin from "../../assets/linkedin.png";
