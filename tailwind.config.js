@@ -11,7 +11,7 @@ module.exports = {
         // Custom border-radius definition
       },
       colors: {
-        green_color: "#20B716",
+        theme_color: "#FF5722",
         red_color: "#D9185F",
         google_color: "#4285F4",
         facebook_color: "#1877F2",
