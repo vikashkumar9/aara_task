@@ -3,7 +3,7 @@ import BASE_URL from "./config";
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-  baseURL: BASE_URL, // Set your API base URL
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },

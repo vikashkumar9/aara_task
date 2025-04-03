@@ -1,14 +1,24 @@
 import React, { useState } from "react";
 import ComplaintHeader from "../../components/complaintHeader/ComplaintHeader";
+import Select from "react-select";
 
 const ComplainTaskList = () => {
   const [showComplaint, setShowComplaint] = useState(true); // Use a boolean state for toggle
-  const [activeButton, setActiveButton] = useState("Mobile Number"); // Initialize state
-
+  const [activeButton, setActiveButton] = useState("Mobile Number");
+  const [copyButton, setCopyButton] = useState("Email");
+  // Initialize state
+  const [name, setName] = useState("");
   const handleComplaint = () => {
     setShowComplaint((prevState) => !prevState); // Toggle between true and false
   };
-
+  const options = [
+    { value: "bed1", label: "Bed 1" },
+    { value: "bed2", label: "Bed 2" },
+    { value: "roomA", label: "Room A" },
+    { value: "roomB", label: "Room B" },
+    { value: "locationX", label: "Location X" },
+    { value: "locationY", label: "Location Y" },
+  ];
   return (
     <div>
       <ComplaintHeader />
@@ -184,7 +194,6 @@ const ComplainTaskList = () => {
                   </label>
                   <input
                     type="email"
-                   
                     className="w-[70%] p-1 focus:outline-none border-gray-300"
                   />
                 </div>
@@ -195,6 +204,8 @@ const ComplainTaskList = () => {
                   </label>
                   <input
                     type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Enter your name"
                     className="w-[70%] p-1 focus:outline-none border-gray-300"
                   />
@@ -245,7 +256,6 @@ const ComplainTaskList = () => {
                     <div className="relative flex-1">
                       <input
                         type="text"
-                        
                         className="w-full p-1 focus:outline-none border-gray-300"
                       />
                     </div>
@@ -259,6 +269,8 @@ const ComplainTaskList = () => {
                   </label>
                   <input
                     type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Enter your name"
                     className="w-[70%] p-1 focus:outline-none border-gray-300"
                   />
@@ -299,7 +311,6 @@ const ComplainTaskList = () => {
                   </label>
                   <input
                     type="text"
-                    
                     className="w-[70%] p-1 focus:outline-none border-gray-300"
                   />
                 </div>
@@ -311,6 +322,8 @@ const ComplainTaskList = () => {
                   </label>
                   <input
                     type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="Enter your name"
                     className="w-[70%] p-1 focus:outline-none border-gray-300"
                   />
@@ -345,13 +358,145 @@ const ComplainTaskList = () => {
                 </div>
               </div>
             )}
-               <div className="rounded mx-4 border-2 border-[#008080] mb-8 "></div>
+
+            {name.length > 0 && (
+              <div className="w-[40%] mx-auto p-6">
+                <div className="mb-4 flex items-center space-x-8">
+                  <p className="block text-gray-700 mb-1 w-[30%] text-sm">
+                    Select Complaint Source :
+                  </p>
+                  <div className="mt-4 flex gap-4 justify-end pr-16">
+                    <div>
+                      <select className="ml-4 border rounded px-3 py-1 text-sm outline-none focus:ring-2 text-[#30879f] bg-white border-[#30879f]">
+                        <option value="Select">Select</option>
+                        <option value="General Complaint">
+                          General Complaint
+                        </option>
+                        <option value="Twitter Complaint">
+                          Twitter Complaint
+                        </option>
+                        <option value="Facebook Complaint">
+                          Facebook Complaint
+                        </option>
+                      </select>
+                    </div>{" "}
+                  </div>
+                </div>
+
+                <div className="mb-4 flex items-center space-x-8">
+                  <label className="block text-gray-700 mb-1 w-[30%]">
+                    Enter Location/Room No :
+                  </label>
+
+                  <Select
+                    options={options}
+                    // value={location ? { value: location, label: location } : null}
+                    // onChange={(selected) => {
+                    //   setLocation(selected ? selected.value : "");
+                    //   setIsInputVisible(false);
+                    // }}
+                    placeholder="Bed / Room / Location"
+                    isSearchable
+                    className="basic-single w-full sm:w-[60%] "
+                    classNamePrefix="select"
+                  />
+                </div>
+              </div>
+            )}
+            <div className="rounded mx-4 border-2 border-[#008080] mb-8 "></div>
+
+            {name.length > 0 && (
+              <div>
+                <div className="flex justify-center space-x-8">
+                  <div className="flex gap-4 mb-6">
+                    <button
+                      onClick={() => setCopyButton("Verbal")}
+                      className={`px-2 text-sm border rounded-md  ${
+                        copyButton === "Verbal"
+                          ? "text-white bg-[#30879f]"
+                          : "text-[#30879f] bg-white border-[#30879f] hover:bg-[#f0fafa]"
+                      }`}
+                      aria-label="Tasks Verbal"
+                    >
+                      Verbal
+                    </button>
+                    <button
+                      onClick={() => setCopyButton("Hard Copy")}
+                      className={`px-2 text-sm border rounded-md ${
+                        copyButton === "Hard Copy"
+                          ? "text-white bg-[#30879f]"
+                          : "text-[#30879f] bg-white border-[#30879f] hover:bg-[#f0fafa]"
+                      }`}
+                      aria-label="Tasks Hard Copy"
+                    >
+                      Hard Copy
+                    </button>
+                    <button
+                      onClick={() => setCopyButton("Email")}
+                      className={`px-2 text-sm border rounded-md ${
+                        copyButton === "Email"
+                          ? "text-white bg-[#30879f]"
+                          : "text-[#30879f] bg-white border-[#30879f] hover:bg-[#f0fafa]"
+                      }`}
+                      aria-label="Email"
+                    >
+                      Email
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mb-4 flex items-center space-x-8 px-32">
+                  <label className="block text-gray-700 mb-1 w-[30%]">
+                    Subject:
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="Enter Subject"
+                    className="w-[50%] p-1 px-2 focus:outline-none border-gray-300"
+                  />
+                </div>
+                <div className="mb-4 flex items-center space-x-8 px-32">
+                  <label className="block text-gray-700 mb-1 w-[30%]">
+                    Description:
+                  </label>
+                  <textarea
+                    placeholder="Enter Description"
+                    className="w-[50%] p-1 px-2 focus:outline-none border border-gray-300 rounded-md resize-none"
+                    rows="2"
+                  ></textarea>
+                </div>
+
+                <div className="mb-4 flex items-center space-x-8 px-32">
+                  <label className="block text-gray-700 mb-1 w-[30%]">
+                    Department:
+                  </label>
+                  <select className="ml-4 border rounded px-3 py-1 text-sm outline-none focus:ring-2 text-[#30879f] bg-white border-[#30879f]">
+                    <option value="Select">Select Department</option>
+                    <option value="General Complaint">General Complaint</option>
+                    <option value="Twitter Complaint">Twitter Complaint</option>
+                    <option value="Facebook Complaint">
+                      Facebook Complaint
+                    </option>
+                  </select>
+                </div>
+
+                <div className="mb-4 flex items-center space-x-8 px-32">
+                  <label className="block text-gray-700 mb-1 w-[30%]">
+                    Add Image(.jpg):
+                  </label>
+
+                  <input type="file" id="img" name="img" accept="image/*" />
+                </div>
+                <div className="flex justify-center space-x-8">
+                  <button className="px-2 text-sm border rounded-md  text-[#30879f] bg-white border-[#30879f] hover:bg-[#f0fafa]">
+                    Create
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-          
         )}
-      
       </div>
-     
     </div>
   );
 };

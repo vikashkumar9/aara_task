@@ -4,6 +4,7 @@ import TimeModel from "../../components/timeModel/TimeModel";
 import Select from "react-select";
 import BASE_URL from "../../config";
 import axios from "axios";
+import { useGetPostQuery } from "../servies/post";
 
 const Addtask = () => {
   const [location, setLocation] = useState("");
@@ -13,57 +14,63 @@ const Addtask = () => {
   const [showTimeModel, setShowTimeModel] = useState(false);
   const [task, setTask] = useState("");
   const [locationData, setLocationData] = useState(null);
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
 
-  //   if (!token) {
-  //     console.error("No token found, user might not be logged in.");
-  //     return; // Stop execution if there's no token
-  //   }
+  // const { data, error, isLoading } = useGetPostQuery({ page: 1, limit: 10 });
+  // console.log("data", data);
+  // const token = localStorage.getItem("token");
+  const token = "343345435";
 
-  //   axios
-  //     .get(`${BASE_URL}/bed-management-api/`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setLocationData(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(
-  //         "Error fetching data:",
-  //         error.response?.data || error.message
-  //       );
-  //     });
-  // }, []);
-  // console.log(locationData);
-  axios.interceptors.request.use((config) => {
-    const token = localStorage.getItem("token"); // Fetch the latest token
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  });
-
+  console.log(token);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/bed-management-api/`);
+    if (!token) {
+      console.error("No token found, user might not be logged in.");
+      return; // Stop execution if there's no token
+    }
+
+    axios
+      .get(`${BASE_URL}/bed-management-api/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
         setLocationData(response.data);
-        console.log("Fetched Data:", response.data); // Log after setting state
-      } catch (error) {
+        console.log(response.data);
+      })
+      .catch((error) => {
         console.error(
           "Error fetching data:",
           error.response?.data || error.message
         );
-      }
-    };
-
-    fetchData();
+      });
   }, []);
+
+  // console.log(locationData);
+  // axios.interceptors.request.use((config) => {
+  //   const token = localStorage.getItem("token"); // Fetch the latest token
+  //   if (token) {
+  //     config.headers.Authorization = `Bearer ${token}`;
+  //   }
+  //   return config;
+  // });
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`${BASE_URL}/bed-management-api/`);
+  //       setLocationData(response.data);
+  //       console.log("Fetched Data:", response.data); // Log after setting state
+  //     } catch (error) {
+  //       console.error(
+  //         "Error fetching data:",
+  //         error.response?.data || error.message
+  //       );
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const handleTimeSelection = (time) => {
     setTimeSelection(time);
